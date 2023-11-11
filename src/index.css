@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app {
+  @apply px-5 md:px-20;
+}
+
+header {
+  @apply flex flex-col md:flex-row justify-between items-center py-5 border-b border-slate-300;
+}
+
+nav {
+  @apply block mr-auto ml-20;
+}
+
+.navList {
+  @apply flex flex-col md:flex-row items-center gap-5 text-sm font-semibold text-slate-500;
+}
+
+.navText {
+  @apply cursor-pointer;
+}
+
+.cartGrp {
+  @apply flex flex-row items-center gap-10;
+}
+
+.cartIcon {
+  @apply cursor-pointer;
+}
+
+.avatar {
+  @apply h-10 w-10 cursor-pointer;
+}
+
+.cartIcon,
+.avatar,
+.navText,
+.thumbnail,
+.addToCartBtn {
+  @apply hover:scale-110 transition ease-in-out duration-200;
+}
+
+.mainContent {
+  @apply mt-10 flex flex-col lg:flex-row gap-5;
+}
+
+.imgSection,
+.textSection {
+  @apply w-auto lg:w-1/2;
+}
+
+.mainImg {
+  @apply rounded-lg h-80 mb-5;
+}
+
+.thumbNailContainer {
+  @apply flex flex-row gap-4 justify-center;
+}
+
+.thumbnail {
+  @apply h-16 w-16 rounded-lg cursor-pointer;
+}
+
+/* TEXT SECTION */
+.pricingGrp {
+  @apply mt-7;
+}
+
+.discountPrice {
+  @apply font-bold text-3xl;
+}
+
+.price {
+  @apply text-slate-400 font-semibold  line-through mt-1;
+}
+
+.addToCartGrp {
+  @apply flex flex-row items-center mt-7 gap-6;
+}
+
+.addRemoveGrp {
+  @apply w-40 flex flex-row justify-between items-center p-3 rounded-lg bg-slate-500;
+}
+
+.addToCartBtn {
+  @apply font-semibold text-white bg-orange-600 rounded-lg p-3 w-5/12;
+}
