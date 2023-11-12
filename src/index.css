@@ -2,28 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply font-kumbahSans;
+}
+
 .app {
   @apply px-5 md:px-20;
 }
 
 header {
-  @apply flex flex-col md:flex-row justify-between items-center py-5 border-b border-slate-300;
+  @apply py-5 md:py-0 relative flex flex-row justify-between md:items-center  border-b border-slate-300;
+}
+
+.menuContainer {
+  @apply flex flex-row gap-3 items-center;
 }
 
 nav {
-  @apply block mr-auto ml-20;
+  @apply block w-1/2 md:w-auto md:mr-auto md:ml-20 transition ease-in-out duration-300 bg-white md:bg-transparent opacity-90 md:opacity-100     absolute md:relative top-24 md:top-0;
+}
+
+.hideNav {
+  @apply h-0 md:h-auto overflow-hidden relative -translate-x-96;
+}
+.showNav {
+  @apply h-screen md:h-auto  -translate-x-0;
 }
 
 .navList {
-  @apply flex flex-col md:flex-row items-center gap-5 text-sm font-semibold text-slate-500;
+  @apply flex flex-col md:flex-row items-center gap-10 md:gap-5 text-xl md:text-sm mt-10 lg:mt-0 font-semibold text-slate-500;
 }
 
 .navText {
-  @apply cursor-pointer;
+  @apply md:py-8 border-b-4 border-transparent md:hover:border-orange-500 hover:text-black transition ease-in-out duration-200 cursor-pointer;
 }
 
 .cartGrp {
-  @apply flex flex-row items-center gap-10;
+  @apply flex flex-row items-center gap-3 md:gap-10;
 }
 
 .cartIcon {
@@ -36,7 +51,6 @@ nav {
 
 .cartIcon,
 .avatar,
-.navText,
 .thumbnail,
 .addToCartBtn {
   @apply hover:scale-110 transition ease-in-out duration-200;
@@ -85,5 +99,5 @@ nav {
 }
 
 .addToCartBtn {
-  @apply font-semibold text-white bg-orange-600 rounded-lg p-3 w-5/12;
+  @apply flex flex-row justify-center items-center gap-3 font-semibold text-white bg-orange-600 rounded-lg p-3 w-5/12;
 }

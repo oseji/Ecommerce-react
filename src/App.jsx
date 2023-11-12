@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import avatar from "./assets/image-avatar.png";
 import product1 from "./assets/image-product-1.jpg";
 import product2 from "./assets/image-product-2.jpg";
@@ -37,6 +37,15 @@ function App() {
       />
     </svg>
   );
+  const iconCartWhite = (
+    <svg width="22" height="20" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M20.925 3.641H3.863L3.61.816A.896.896 0 0 0 2.717 0H.897a.896.896 0 1 0 0 1.792h1l1.031 11.483c.073.828.52 1.726 1.291 2.336C2.83 17.385 4.099 20 6.359 20c1.875 0 3.197-1.87 2.554-3.642h4.905c-.642 1.77.677 3.642 2.555 3.642a2.72 2.72 0 0 0 2.717-2.717 2.72 2.72 0 0 0-2.717-2.717H6.365c-.681 0-1.274-.41-1.53-1.009l14.321-.842a.896.896 0 0 0 .817-.677l1.821-7.283a.897.897 0 0 0-.87-1.114ZM6.358 18.208a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm10.015 0a.926.926 0 0 1 0-1.85.926.926 0 0 1 0 1.85Zm2.021-7.243-13.8.81-.57-6.341h15.753l-1.383 5.53Z"
+        fill="#FFF"
+        fill-rule="nonzero"
+      />
+    </svg>
+  );
   const iconDelete = (
     <svg
       width="14"
@@ -54,20 +63,42 @@ function App() {
     </svg>
   );
 
+  const navRef = useRef(null);
+
+  const [isMenuToggled, setIsMenuToggled] = useState(false);
+  const [menuImg, setMenuImg] = useState(hamburgerMenu);
   const [mainImg, setMainImg] = useState(product1);
   const [price, setPrice] = useState(250);
   const [discountPrice, setDiscountPrice] = useState(125);
   const [itemCount, setItemCount] = useState(0);
 
+  const toggleMenu = (e) => {
+    if (!isMenuToggled) {
+      setMenuImg(closeMenu);
+      setIsMenuToggled(true);
+    } else {
+      setMenuImg(hamburgerMenu);
+      setIsMenuToggled(false);
+    }
+
+    const navList = navRef.current;
+    console.log(navList);
+
+    navList.classList.toggle("hideNav");
+    navList.classList.toggle("showNav");
+  };
+
   return (
     <div className="app">
       <header>
         <div className="menuContainer">
-          <div className="menu md:hidden">{hamburgerMenu}</div>
-          <h2 className="text-3xl font-bold">sneakers</h2>
+          <div className="menu md:hidden" onClick={toggleMenu}>
+            {menuImg}
+          </div>
+          <h2 className="text-3xl font-bold mb-2">sneakers</h2>
         </div>
 
-        <nav>
+        <nav className="hideNav" ref={navRef}>
           <ul className="navList">
             <li className="navText">Collections</li>
             <li className="navText">Men</li>
@@ -121,12 +152,19 @@ function App() {
 
             <div className="addToCartGrp">
               <div className="addRemoveGrp">
-                <button className="minusBtn">-</button>
+                <button className="minusBtn text-orange-500 font-bold scale-150">
+                  -
+                </button>
                 <p className="itemCounter font-semibold">{itemCount}</p>
-                <button className="addBtn">+</button>
+                <button className="addBtn  text-orange-500 font-bold scale-150">
+                  +
+                </button>
               </div>
 
-              <button className="addToCartBtn">Add to cart</button>
+              <button className="addToCartBtn">
+                {iconCartWhite}
+                <p>Add to cart</p>
+              </button>
             </div>
           </div>
         </section>

@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        kumbahSans: ["Kumbh Sans", "sans - serif"],
+        agba: ["Oswald", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };
