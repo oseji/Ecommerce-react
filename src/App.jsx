@@ -80,10 +80,6 @@ function App() {
   const [discountPrice, setDiscountPrice] = useState(0);
   let [itemCount, setItemCount] = useState(0);
 
-  // useEffect(() => {
-  //   console.log(price, discountPrice);
-  // }, [price]);
-
   useEffect(() => {
     //UPDATING ITEM COUNTER
     const counter = itemCounterRef.current;
@@ -196,7 +192,7 @@ function App() {
                   className="checkoutImg"
                 />
 
-                <div className="text-slate-400 ">
+                <div className="text-slate-400 text-sm md:text-base">
                   <p>Fall Limited Edition Sneakers</p>
                   <p>
                     {discountPrice} x {itemCount}
@@ -348,7 +344,13 @@ function App() {
                 </button>
               </div>
 
-              <button className="addToCartBtn">
+              <button
+                className="addToCartBtn"
+                onClick={() => {
+                  const checkout = checkoutRef.current;
+                  checkout.classList.remove("hideCheckOut");
+                }}
+              >
                 {iconCartWhite}
                 <p>Add to cart</p>
               </button>
