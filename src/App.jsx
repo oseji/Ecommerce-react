@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import avatar from "./assets/image-avatar.png";
 import product1 from "./assets/image-product-1.jpg";
 import product2 from "./assets/image-product-2.jpg";
@@ -20,7 +20,7 @@ function App() {
     </svg>
   );
   const closeMenu = (
-    <svg width="14" height="15" xmlns="http://www.w3.org/2000/svg">
+    <svg width="16" height="15" xmlns="http://www.w3.org/2000/svg">
       <path
         d="m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z"
         fill="#69707D"
@@ -64,13 +64,30 @@ function App() {
   );
 
   const navRef = useRef(null);
+  const itemCounterRef = useRef(null);
 
   const [isMenuToggled, setIsMenuToggled] = useState(false);
   const [menuImg, setMenuImg] = useState(hamburgerMenu);
   const [mainImg, setMainImg] = useState(product1);
-  const [price, setPrice] = useState(250);
-  const [discountPrice, setDiscountPrice] = useState(125);
-  const [itemCount, setItemCount] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [discountPrice, setDiscountPrice] = useState(0);
+  let [itemCount, setItemCount] = useState(0);
+
+  // useEffect(() => {
+  //   console.log(price, discountPrice);
+  // }, [price]);
+
+  //UPDATING ITEM COUNTER
+  useEffect(() => {
+    const counter = itemCounterRef.current;
+    if (itemCount === 0) {
+      counter.classList.add("hidden");
+    }
+
+    if (itemCount > 0) {
+      counter.classList.remove("hidden");
+    }
+  }, [itemCount]);
 
   const toggleMenu = (e) => {
     if (!isMenuToggled) {
@@ -109,7 +126,12 @@ function App() {
         </nav>
 
         <div className="cartGrp">
-          <div className="cartIcon ">{iconCart}</div>
+          <div className="cartIcon ">
+            {iconCart}
+            <span className="itemCounter hidden" ref={itemCounterRef}>
+              {itemCount}
+            </span>
+          </div>
           <img src={avatar} alt="profile image" className="avatar" />
         </div>
       </header>
@@ -119,10 +141,46 @@ function App() {
           <img src={mainImg} alt="Main image" className="mainImg" />
 
           <div className="thumbNailContainer">
-            <img src={thumbnail1} alt="image thumbnail" className="thumbnail" />
-            <img src={thumbnail2} alt="image thumbnail" className="thumbnail" />
-            <img src={thumbnail3} alt="image thumbnail" className="thumbnail" />
-            <img src={thumbnail4} alt="image thumbnail" className="thumbnail" />
+            <img
+              src={thumbnail1}
+              alt="image thumbnail"
+              className="thumbnail"
+              onClick={(e) => {
+                setMainImg(product1);
+                setPrice(250);
+                setDiscountPrice(250 / 2);
+              }}
+            />
+            <img
+              src={thumbnail2}
+              alt="image thumbnail"
+              className="thumbnail"
+              onClick={() => {
+                setMainImg(product2);
+                setPrice(500);
+                setDiscountPrice(500 / 2);
+              }}
+            />
+            <img
+              src={thumbnail3}
+              alt="image thumbnail"
+              className="thumbnail"
+              onClick={() => {
+                setMainImg(product3);
+                setPrice(750);
+                setDiscountPrice(750 / 2);
+              }}
+            />
+            <img
+              src={thumbnail4}
+              alt="image thumbnail"
+              className="thumbnail"
+              onClick={() => {
+                setMainImg(product4);
+                setPrice(1000);
+                setDiscountPrice(1000 / 2);
+              }}
+            />
           </div>
         </section>
 
@@ -152,11 +210,37 @@ function App() {
 
             <div className="addToCartGrp">
               <div className="addRemoveGrp">
-                <button className="minusBtn text-orange-500 font-bold scale-150">
+                <button
+                  className="minusBtn"
+                  onClick={() => {
+                    // const counter = itemCounterRef.current;
+                    // if (itemCount === 0) {
+                    //   counter.classList.add("hidden");
+                    // }
+
+                    if (itemCount >= 0) {
+                      itemCount--;
+                    }
+                    setItemCount(itemCount);
+                  }}
+                >
                   -
                 </button>
-                <p className="itemCounter font-semibold">{itemCount}</p>
-                <button className="addBtn  text-orange-500 font-bold scale-150">
+
+                <p className=" font-semibold">{itemCount}</p>
+
+                <button
+                  className="addBtn"
+                  onClick={() => {
+                    const counter = itemCounterRef.current;
+                    // if (itemCount >= 0) {
+                    //   counter.classList.remove("hidden");
+                    // }
+
+                    itemCount++;
+                    setItemCount(itemCount);
+                  }}
+                >
                   +
                 </button>
               </div>

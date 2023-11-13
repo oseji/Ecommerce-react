@@ -7,7 +7,7 @@ body {
 }
 
 .app {
-  @apply px-5 md:px-20;
+  @apply px-5 pb-5 md:pb-0 md:px-20;
 }
 
 header {
@@ -23,7 +23,7 @@ nav {
 }
 
 .hideNav {
-  @apply h-0 md:h-auto overflow-hidden relative -translate-x-96;
+  @apply h-0 md:h-auto overflow-hidden relative -translate-x-96 md:-translate-x-0;
 }
 .showNav {
   @apply h-screen md:h-auto  -translate-x-0;
@@ -42,7 +42,10 @@ nav {
 }
 
 .cartIcon {
-  @apply cursor-pointer;
+  @apply cursor-pointer flex flex-row;
+}
+.itemCounter {
+  @apply bg-orange-500 text-white font-semibold py-0.5 px-3 rounded-full text-xs;
 }
 
 .avatar {
@@ -74,7 +77,7 @@ nav {
 }
 
 .thumbnail {
-  @apply h-16 w-16 rounded-lg cursor-pointer;
+  @apply h-16 w-16 rounded-lg cursor-pointer hover:opacity-60;
 }
 
 /* TEXT SECTION */
@@ -95,9 +98,14 @@ nav {
 }
 
 .addRemoveGrp {
-  @apply w-40 flex flex-row justify-between items-center p-3 rounded-lg bg-slate-500;
+  @apply w-40 flex flex-row justify-between items-center p-2 rounded-lg bg-slate-200;
+}
+
+.minusBtn,
+.addBtn {
+  @apply text-orange-500 p-1 font-bold scale-150;
 }
 
 .addToCartBtn {
-  @apply flex flex-row justify-center items-center gap-3 font-semibold text-white bg-orange-600 rounded-lg p-3 w-5/12;
+  @apply w-1/2 md:w-5/12 flex flex-row justify-center items-center gap-3 font-semibold text-white bg-orange-600 rounded-lg p-3;
 }
