@@ -14,6 +14,34 @@ header {
   @apply py-5 md:py-0 relative flex flex-row justify-between md:items-center  border-b border-slate-300;
 }
 
+.checkoutContainer {
+  @apply absolute  md:right-10 opacity-95   -translate-x-1/2  md:translate-x-0 left-1/2 md:left-auto          shadow-2xl  w-10/12 md:w-1/2 lg:w-1/3 h-52 bg-white rounded-lg transition ease-in-out duration-700;
+}
+
+.checkoutDetailsContainer {
+  @apply flex flex-row justify-between items-center;
+}
+
+.checkoutImg {
+  @apply h-12 w-12 rounded-lg;
+}
+
+.deleteIcon {
+  @apply p-2 scale-125 cursor-pointer;
+}
+
+.checkoutBtn {
+  @apply bg-orange-500 text-white font-semibold w-11/12 mx-auto block mt-4 p-2 rounded-lg;
+}
+
+.hideCheckOut {
+  @apply -translate-x-100 md:translate-x-0 md:-translate-y-96;
+}
+
+.cartDetailsContainer {
+  @apply p-5;
+}
+
 .menuContainer {
   @apply flex flex-row gap-3 items-center;
 }
@@ -55,7 +83,8 @@ nav {
 .cartIcon,
 .avatar,
 .thumbnail,
-.addToCartBtn {
+.addToCartBtn,
+.checkoutBtn {
   @apply hover:scale-110 transition ease-in-out duration-200;
 }
 
@@ -86,19 +115,19 @@ nav {
 }
 
 .discountPrice {
-  @apply font-bold text-3xl;
+  @apply font-bold text-4xl md:text-3xl;
 }
 
 .price {
-  @apply text-slate-400 font-semibold  line-through mt-1;
+  @apply text-xl md:text-base text-slate-400 font-semibold  line-through mt-1;
 }
 
 .addToCartGrp {
-  @apply flex flex-row items-center mt-7 gap-6;
+  @apply flex flex-col md:flex-row items-center mt-4 md:mt-7 gap-6;
 }
 
 .addRemoveGrp {
-  @apply w-40 flex flex-row justify-between items-center p-2 rounded-lg bg-slate-200;
+  @apply w-full md:w-40 flex flex-row justify-between items-center p-2 rounded-lg bg-slate-200;
 }
 
 .minusBtn,
@@ -107,5 +136,5 @@ nav {
 }
 
 .addToCartBtn {
-  @apply w-1/2 md:w-5/12 flex flex-row justify-center items-center gap-3 font-semibold text-white bg-orange-600 rounded-lg p-3;
+  @apply w-full md:w-5/12 flex flex-row justify-center items-center gap-3 font-semibold text-white bg-orange-600 rounded-lg p-3;
 }

@@ -7,6 +7,9 @@ export default {
         kumbahSans: ["Kumbh Sans", "sans - serif"],
         agba: ["Oswald", "sans-serif"],
       },
+      translate: {
+        100: "34.375rem",
+      },
     },
   },
   plugins: [],

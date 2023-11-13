@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import avatar from "./assets/image-avatar.png";
 import product1 from "./assets/image-product-1.jpg";
 import product2 from "./assets/image-product-2.jpg";
@@ -10,6 +11,7 @@ import thumbnail3 from "./assets/image-product-3-thumbnail.jpg";
 import thumbnail4 from "./assets/image-product-4-thumbnail.jpg";
 
 function App() {
+  //SVG'S
   const hamburgerMenu = (
     <svg width="16" height="15" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -48,25 +50,30 @@ function App() {
   );
   const iconDelete = (
     <svg
-      width="14"
-      height="16"
+      class="w-6 h-6 text-gray-800 dark:text-white"
+      aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      fill="#69707D"
+      viewBox="0 0 18 20"
     >
-      <defs>
-        <path
-          d="M0 2.625V1.75C0 1.334.334 1 .75 1h3.5l.294-.584A.741.741 0 0 1 5.213 0h3.571a.75.75 0 0 1 .672.416L9.75 1h3.5c.416 0 .75.334.75.75v.875a.376.376 0 0 1-.375.375H.375A.376.376 0 0 1 0 2.625Zm13 1.75V14.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1 14.5V4.375C1 4.169 1.169 4 1.375 4h11.25c.206 0 .375.169.375.375ZM4.5 6.5c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Zm3 0c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Zm3 0c0-.275-.225-.5-.5-.5s-.5.225-.5.5v7c0 .275.225.5.5.5s.5-.225.5-.5v-7Z"
-          id="a"
-        />
-      </defs>
-      <use fill="#C3CAD9" fill-rule="nonzero" xlink:href="#a" />
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"
+      />
     </svg>
   );
 
   const navRef = useRef(null);
   const itemCounterRef = useRef(null);
+  const checkoutRef = useRef(null);
 
+  const [currentProduct, setCurrentProduct] = useState("product-1");
   const [isMenuToggled, setIsMenuToggled] = useState(false);
+  const [isCartEmpty, setIsCartEmpty] = useState(true);
+
   const [menuImg, setMenuImg] = useState(hamburgerMenu);
   const [mainImg, setMainImg] = useState(product1);
   const [price, setPrice] = useState(0);
@@ -77,8 +84,8 @@ function App() {
   //   console.log(price, discountPrice);
   // }, [price]);
 
-  //UPDATING ITEM COUNTER
   useEffect(() => {
+    //UPDATING ITEM COUNTER
     const counter = itemCounterRef.current;
     if (itemCount === 0) {
       counter.classList.add("hidden");
@@ -86,6 +93,31 @@ function App() {
 
     if (itemCount > 0) {
       counter.classList.remove("hidden");
+    }
+
+    //UPDATING THE DISPLAYED PRICES TO MATCH THE ITEM COUNT
+    if (currentProduct === "product-1") {
+      setPrice(250 * itemCount);
+      setDiscountPrice((250 * itemCount) / 2);
+    }
+    if (currentProduct === "product-2") {
+      setPrice(500 * itemCount);
+      setDiscountPrice((500 * itemCount) / 2);
+    }
+    if (currentProduct === "product-3") {
+      setPrice(750 * itemCount);
+      setDiscountPrice((750 * itemCount) / 2);
+    }
+    if (currentProduct === "product-4") {
+      setPrice(1000 * itemCount);
+      setDiscountPrice((1000 * itemCount) / 2);
+    }
+
+    //UPDATING CART STATUS TO DISPLAY RELEVANT CONTENT
+    if (itemCount > 0) {
+      setIsCartEmpty(false);
+    } else if (itemCount <= 0) {
+      setIsCartEmpty(true);
     }
   }, [itemCount]);
 
@@ -105,9 +137,18 @@ function App() {
     navList.classList.toggle("showNav");
   };
 
+  const toggleCheckout = () => {
+    const checkout = checkoutRef.current;
+    checkout.classList.toggle("hideCheckOut");
+    console.log(checkoutRef);
+  };
+
   return (
     <div className="app">
-      <header>
+      <motion.header
+        initial={{ opacity: 0, y: -500 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
+      >
         <div className="menuContainer">
           <div className="menu md:hidden" onClick={toggleMenu}>
             {menuImg}
@@ -126,7 +167,7 @@ function App() {
         </nav>
 
         <div className="cartGrp">
-          <div className="cartIcon ">
+          <div className="cartIcon " onClick={toggleCheckout}>
             {iconCart}
             <span className="itemCounter hidden" ref={itemCounterRef}>
               {itemCount}
@@ -134,10 +175,58 @@ function App() {
           </div>
           <img src={avatar} alt="profile image" className="avatar" />
         </div>
-      </header>
+      </motion.header>
+
+      <div className="checkoutContainer hideCheckOut" ref={checkoutRef}>
+        <h2 className="font-bold border-b border-slate-300 p-3">Cart</h2>
+
+        <div className="cartDetailsContainer">
+          {isCartEmpty && (
+            <div className="mt-10 mx-auto font-bold text-center text-slate-500">
+              Cart is empty
+            </div>
+          )}
+
+          {!isCartEmpty && (
+            <div className="mt-2 mx-auto ">
+              <div className="checkoutDetailsContainer">
+                <img
+                  src={mainImg}
+                  alt="product image"
+                  className="checkoutImg"
+                />
+
+                <div className="text-slate-400 ">
+                  <p>Fall Limited Edition Sneakers</p>
+                  <p>
+                    {discountPrice} x {itemCount}
+                    <span className="text-black font-bold"> ${price}</span>
+                  </p>
+                </div>
+
+                <div
+                  className="deleteIcon"
+                  onClick={() => {
+                    setIsCartEmpty(true);
+                    setItemCount(0);
+                  }}
+                >
+                  {iconDelete}
+                </div>
+              </div>
+
+              <button className="checkoutBtn">Checkout</button>
+            </div>
+          )}
+        </div>
+      </div>
 
       <main className="mainContent">
-        <section className="imgSection flex flex-col items-center">
+        <motion.section
+          initial={{ opacity: 0, x: -1000 }}
+          animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
+          className="imgSection flex flex-col items-center"
+        >
           <img src={mainImg} alt="Main image" className="mainImg" />
 
           <div className="thumbNailContainer">
@@ -147,8 +236,10 @@ function App() {
               className="thumbnail"
               onClick={(e) => {
                 setMainImg(product1);
+                setCurrentProduct("product-1");
                 setPrice(250);
                 setDiscountPrice(250 / 2);
+                setItemCount(0);
               }}
             />
             <img
@@ -157,8 +248,10 @@ function App() {
               className="thumbnail"
               onClick={() => {
                 setMainImg(product2);
+                setCurrentProduct("product-2");
                 setPrice(500);
                 setDiscountPrice(500 / 2);
+                setItemCount(0);
               }}
             />
             <img
@@ -167,8 +260,10 @@ function App() {
               className="thumbnail"
               onClick={() => {
                 setMainImg(product3);
+                setCurrentProduct("product-3");
                 setPrice(750);
                 setDiscountPrice(750 / 2);
+                setItemCount(0);
               }}
             />
             <img
@@ -177,14 +272,20 @@ function App() {
               className="thumbnail"
               onClick={() => {
                 setMainImg(product4);
+                setCurrentProduct("product-4");
                 setPrice(1000);
                 setDiscountPrice(1000 / 2);
+                setItemCount(0);
               }}
             />
           </div>
-        </section>
+        </motion.section>
 
-        <section className="textSection">
+        <motion.section
+          initial={{ opacity: 0, x: 1000 }}
+          animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
+          className="textSection"
+        >
           <h3 className="text-orange-500 font-bold text-sm tracking-widest mb-5">
             SNEAKER COMPANY
           </h3>
@@ -200,13 +301,15 @@ function App() {
           </p>
 
           <div className="pricingGrp">
-            <div className="flex flex-row items-center gap-3">
-              <p className="discountPrice">${discountPrice}</p>
-              <p className="bg-orange-200 text-orange-500 font-bold px-2 py-1 text-xs rounded-lg">
-                50%
-              </p>
+            <div className="flex flex-row md:flex-col justify-between md:justify-start items-center md:items-start py-3 md:py-0">
+              <div className="flex flex-row items-center gap-3">
+                <p className="discountPrice">${discountPrice}</p>
+                <p className="bg-orange-200 text-orange-500 font-bold px-2 py-1 text-xs rounded-lg">
+                  50%
+                </p>
+              </div>
+              <p className="price">${price}</p>
             </div>
-            <p className="price">${price}</p>
 
             <div className="addToCartGrp">
               <div className="addRemoveGrp">
@@ -227,7 +330,7 @@ function App() {
                   -
                 </button>
 
-                <p className=" font-semibold">{itemCount}</p>
+                <p className="font-bold md:font-semibold">{itemCount}</p>
 
                 <button
                   className="addBtn"
@@ -251,7 +354,7 @@ function App() {
               </button>
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
     </div>
   );
