@@ -65,10 +65,34 @@ function App() {
       />
     </svg>
   );
+  const iconNext = (
+    <svg width="13" height="18" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="m2 1 8 8-8 8"
+        stroke="#1D2026"
+        stroke-width="3"
+        fill="none"
+        fill-rule="evenodd"
+      />
+    </svg>
+  );
+  const iconPrev = (
+    <svg width="12" height="18" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M11 1 3 9l8 8"
+        stroke="#1D2026"
+        stroke-width="3"
+        fill="none"
+        fill-rule="evenodd"
+      />
+    </svg>
+  );
 
   const navRef = useRef(null);
   const itemCounterRef = useRef(null);
   const checkoutRef = useRef(null);
+  const imgBtnRefs = [useRef(null), useRef(null)];
+  const mainContentRef = useRef(null);
 
   const [currentProduct, setCurrentProduct] = useState("product-1");
   const [isMenuToggled, setIsMenuToggled] = useState(false);
@@ -79,6 +103,7 @@ function App() {
   const [price, setPrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
   let [itemCount, setItemCount] = useState(0);
+  let [displayedProductNum, setDisplayedProductNum] = useState(1);
 
   useEffect(() => {
     //UPDATING ITEM COUNTER
@@ -127,10 +152,15 @@ function App() {
     }
 
     const navList = navRef.current;
-    console.log(navList);
+    const prevBtn = imgBtnRefs[0].current;
+    const nextBtn = imgBtnRefs[1].current;
+    const mainBody = mainContentRef.current;
 
     navList.classList.toggle("hideNav");
     navList.classList.toggle("showNav");
+
+    prevBtn.classList.toggle("opacity-0");
+    nextBtn.classList.toggle("opacity-0");
   };
 
   const toggleCheckout = () => {
@@ -146,7 +176,7 @@ function App() {
         animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
       >
         <div className="menuContainer">
-          <div className="menu md:hidden" onClick={toggleMenu}>
+          <div className="menu md:hidden " onClick={toggleMenu}>
             {menuImg}
           </div>
           <h2 className="text-3xl font-bold mb-2">sneakers</h2>
@@ -217,13 +247,75 @@ function App() {
         </div>
       </div>
 
-      <main className="mainContent">
+      <main className="mainContent" ref={mainContentRef}>
         <motion.section
           initial={{ opacity: 0, x: -1000 }}
           animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
           className="imgSection flex flex-col items-center"
         >
-          <img src={mainImg} alt="Main image" className="mainImg" />
+          <div className="mainImgContainer">
+            <button
+              className="mainImgBtn"
+              id="prevBtn"
+              ref={imgBtnRefs[0]}
+              onClick={() => {
+                console.log("clicked");
+
+                if (displayedProductNum > 0 && displayedProductNum < 5) {
+                  displayedProductNum--;
+                  console.log(displayedProductNum);
+                }
+
+                if (displayedProductNum === 1) {
+                  setMainImg(product1);
+                  setCurrentProduct("product-1");
+                } else if (displayedProductNum === 2) {
+                  setMainImg(product2);
+                  setCurrentProduct("product-2");
+                } else if (displayedProductNum === 3) {
+                  setMainImg(product3);
+                  setCurrentProduct("product-3");
+                } else if (displayedProductNum === 4) {
+                  setMainImg(product4);
+                  setCurrentProduct("product-4");
+                }
+              }}
+            >
+              {iconPrev}
+            </button>
+
+            <img src={mainImg} alt="Main image" className="mainImg" />
+
+            <button
+              className="mainImgBtn"
+              id="nextBtn"
+              ref={imgBtnRefs[1]}
+              onClick={() => {
+                console.log("clicked");
+
+                if (displayedProductNum >= 0 && displayedProductNum < 5) {
+                  displayedProductNum++;
+                  console.log(displayedProductNum);
+                }
+
+                if (displayedProductNum === 1) {
+                  setMainImg(product1);
+                  setCurrentProduct("product-1");
+                } else if (displayedProductNum === 2) {
+                  setMainImg(product2);
+                  setCurrentProduct("product-2");
+                } else if (displayedProductNum === 3) {
+                  setMainImg(product3);
+                  setCurrentProduct("product-3");
+                } else if (displayedProductNum === 4) {
+                  setMainImg(product4);
+                  setCurrentProduct("product-4");
+                }
+              }}
+            >
+              {iconNext}
+            </button>
+          </div>
 
           <div className="thumbNailContainer">
             <img
@@ -286,7 +378,7 @@ function App() {
             SNEAKER COMPANY
           </h3>
 
-          <h1 className="text-5xl capitalize font-bold mb-5">
+          <h1 className="text-4xl md:text-5xl capitalize font-bold mb-5">
             Fall limited edition sneakers
           </h1>
 

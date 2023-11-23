@@ -8,7 +8,7 @@ export default {
         agba: ["Oswald", "sans-serif"],
       },
       translate: {
-        100: "34.375rem",
+        100: "600px",
       },
     },
   },
