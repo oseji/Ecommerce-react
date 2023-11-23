@@ -103,7 +103,7 @@ function App() {
   const [price, setPrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
   let [itemCount, setItemCount] = useState(0);
-  let [displayedProductNum, setDisplayedProductNum] = useState(1);
+  let displayedProductNum = 1;
 
   useEffect(() => {
     //UPDATING ITEM COUNTER
@@ -167,6 +167,51 @@ function App() {
     const checkout = checkoutRef.current;
     checkout.classList.toggle("hideCheckOut");
     console.log(checkoutRef);
+  };
+
+  const handleNextBtn = () => {
+    console.log("clicked");
+
+    if (displayedProductNum > 0 && displayedProductNum < 5) {
+      displayedProductNum++;
+      console.log(displayedProductNum);
+    }
+
+    if (displayedProductNum === 1) {
+      setMainImg(product1);
+      setCurrentProduct("product-1");
+    } else if (displayedProductNum === 2) {
+      setMainImg(product2);
+      setCurrentProduct("product-2");
+    } else if (displayedProductNum === 3) {
+      setMainImg(product3);
+      setCurrentProduct("product-3");
+    } else if (displayedProductNum === 4) {
+      setMainImg(product4);
+      setCurrentProduct("product-4");
+    }
+  };
+  const handlePrevBtn = () => {
+    console.log("clicked");
+
+    if (displayedProductNum > 1 && displayedProductNum < 5) {
+      displayedProductNum--;
+      console.log(displayedProductNum);
+    }
+
+    if (displayedProductNum === 1) {
+      setMainImg(product1);
+      setCurrentProduct("product-1");
+    } else if (displayedProductNum === 2) {
+      setMainImg(product2);
+      setCurrentProduct("product-2");
+    } else if (displayedProductNum === 3) {
+      setMainImg(product3);
+      setCurrentProduct("product-3");
+    } else if (displayedProductNum === 4) {
+      setMainImg(product4);
+      setCurrentProduct("product-4");
+    }
   };
 
   return (
@@ -258,28 +303,7 @@ function App() {
               className="mainImgBtn"
               id="prevBtn"
               ref={imgBtnRefs[0]}
-              onClick={() => {
-                console.log("clicked");
-
-                if (displayedProductNum > 0 && displayedProductNum < 5) {
-                  displayedProductNum--;
-                  console.log(displayedProductNum);
-                }
-
-                if (displayedProductNum === 1) {
-                  setMainImg(product1);
-                  setCurrentProduct("product-1");
-                } else if (displayedProductNum === 2) {
-                  setMainImg(product2);
-                  setCurrentProduct("product-2");
-                } else if (displayedProductNum === 3) {
-                  setMainImg(product3);
-                  setCurrentProduct("product-3");
-                } else if (displayedProductNum === 4) {
-                  setMainImg(product4);
-                  setCurrentProduct("product-4");
-                }
-              }}
+              onClick={handlePrevBtn}
             >
               {iconPrev}
             </button>
@@ -290,28 +314,7 @@ function App() {
               className="mainImgBtn"
               id="nextBtn"
               ref={imgBtnRefs[1]}
-              onClick={() => {
-                console.log("clicked");
-
-                if (displayedProductNum >= 0 && displayedProductNum < 5) {
-                  displayedProductNum++;
-                  console.log(displayedProductNum);
-                }
-
-                if (displayedProductNum === 1) {
-                  setMainImg(product1);
-                  setCurrentProduct("product-1");
-                } else if (displayedProductNum === 2) {
-                  setMainImg(product2);
-                  setCurrentProduct("product-2");
-                } else if (displayedProductNum === 3) {
-                  setMainImg(product3);
-                  setCurrentProduct("product-3");
-                } else if (displayedProductNum === 4) {
-                  setMainImg(product4);
-                  setCurrentProduct("product-4");
-                }
-              }}
+              onClick={handleNextBtn}
             >
               {iconNext}
             </button>

@@ -112,7 +112,7 @@ nav {
 }
 
 .mainImgBtn {
-  @apply md:hidden px-7 py-6 bg-white rounded-full;
+  @apply md:hidden px-5 md:px-7 py-4 md:py-6 bg-white rounded-full;
 }
 #prevBtn,
 #nextBtn {
