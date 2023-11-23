@@ -11,7 +11,7 @@ Users should be able to:
 
 ### Screenshot
 
-!['./ecommerce.jpg']
+!['./ecommerce.jpg']('./ecommerce.jpg')
 
 ### Links
 
